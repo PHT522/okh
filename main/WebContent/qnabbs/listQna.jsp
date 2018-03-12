@@ -50,6 +50,7 @@ List<QnaDto> qnalist = dao.getQnaList(); */
 
 QnaServiceImpl service = QnaService.getInstance();
 List<QnaDto> qnalist = service.getQnaList();
+
 %>
 
 <%
