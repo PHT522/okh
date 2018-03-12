@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+  <display-name>okh</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+
+<!-- ====================== 회원기능 ====================== -->
+<!-- 로그인 -->
+  <servlet>
+    <servlet-name>UserLoginServlet</servlet-name>
+    <servlet-class>user.UserLoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserLoginServlet</servlet-name>
+    <url-pattern>/UserLogin</url-pattern>
+  </servlet-mapping>
+
+<!-- ID 확인 -->
+  <servlet>
+    <servlet-name>UserRegisterCheckServlet</servlet-name>
+    <servlet-class>user.UserRegisterCheckServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserRegisterCheckServlet</servlet-name>
+    <url-pattern>/UserRegisterCheck</url-pattern>
+  </servlet-mapping>
+
+<!-- 회원가입 -->
+  <servlet>
+    <servlet-name>UserRegisterServlet</servlet-name>
+    <servlet-class>user.UserRegisterServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserRegisterServlet</servlet-name>
+    <url-pattern>/UserRegister</url-pattern>
+  </servlet-mapping>
+  
+ <!-- 기술게시판파일업로드 -->
+  <servlet>
+    <servlet-name>PdsController</servlet-name>
+    <servlet-class>controller.PdsController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PdsController</servlet-name>
+    <url-pattern>/PdsController</url-pattern>
+  </servlet-mapping>
+   
+     <!-- 기술게시판 -->
+  <servlet>
+    <servlet-name>TechbbsController</servlet-name>
+    <servlet-class>controller.TechbbsController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TechbbsController</servlet-name>
+    <url-pattern>/TechbbsController</url-pattern>
+  </servlet-mapping>
+  
+  <!-- qnabbs list -->
+  <servlet>
+  	<servlet-name>qnaServlet</servlet-name>
+  	<servlet-class>controller.qnaServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>qnaServlet</servlet-name>
+  	<url-pattern>/qnaServlet</url-pattern>
+  </servlet-mapping>
+  
+  
+</web-app>
