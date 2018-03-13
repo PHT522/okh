@@ -71,7 +71,9 @@ public class QnaServlet extends HttpServlet {
 			RequestDispatcher rd = req.getRequestDispatcher("qnabbslist.jsp");
 
             rd.forward(req, resp);
-
+			
+		}else if(command.equals("qnaDetail")) {
+			System.out.println("여기는 qnadetail");
 			
 		}
 		

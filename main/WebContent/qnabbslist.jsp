@@ -37,12 +37,7 @@ tr,td {
 	border: 1px ;
 	
 }
-
-
-</style>	
-	
-	
-	
+</style>		
 </head>
 <body>
 
@@ -111,7 +106,7 @@ List<QnaDto> qnalist = service.getQnaPagingList(paging, findWord, cho);
 
 <div align="center">
 <!-- 관리자 공지 위치 -->
-<table border="1" >
+<table>
 <!-- (게시물번호)(태그)(좋아요)(답변수)(작성자정보) -->
 <col width="50"><col width="300"><col width="50"><col width="50"><col width="100">
 	<tr>
@@ -132,7 +127,7 @@ List<QnaDto> qnalist = service.getQnaPagingList(paging, findWord, cho);
 
 <!-- 실질적인 qna게시판  -->
 <div align="center">
-<table border="1" >
+<table >
 <!-- (게시물번호)(태그)(좋아요)(답변수)(작성자정보) -->
 <col width="50"><col width="300"><col width="50"><col width="50"><col width="100">
 	<%
@@ -149,14 +144,20 @@ List<QnaDto> qnalist = service.getQnaPagingList(paging, findWord, cho);
 	%>
 	
 	<tr>
-		<td>번호 :<%=qna.getSeq() %></td>
+		<td>번호 :<%=qna.getRef() %></td>
 		<td>테그 : <%=qna.getTag() %></td>
 		<td rowspan="2" style="border-bottom: 1px solid #444444; ">좋아요 : <%=qna.getFavor() %></td>
 		<td rowspan="2" style="border-bottom: 1px solid #444444; ">답변수 : <%=qna.getAnswercount() %></td>
 		<td rowspan="2" style="border-bottom: 1px solid #444444; ">작성자정보 : <%=qna.getId() %> </td>		
 	</tr>
 	<tr>
-		<td colspan="2" style="border-bottom: 1px solid #444444; ">게시물 타이틀 : <%=qna.getTitle() %></td>		
+		<td colspan="2" style="border-bottom: 1px solid #444444; ">
+			게시물 타이틀 : 
+			<%-- <a href="bbsdetail.jsp?seq=<%=qna.getSeq() %>"> --%>
+			<a href="qnabbsdetail.jsp?seq=<%=qna.getSeq() %>">
+			 <%=qna.getTitle() %>
+			</a>
+		</td>		
 	</tr>	
 	
 	<%
