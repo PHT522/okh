@@ -17,7 +17,7 @@ CREATE TABLE OKHMEM(
 )
 */
 
-public class UserDTO {
+public class UserDto {
 	
 	private String id;
 	private String pwd;
@@ -29,7 +29,7 @@ public class UserDTO {
 	private String profile;
 	private int score;
 	
-	public UserDTO(String id, String pwd, String name, int age, String gender, String email, int auth, String profile,
+	public UserDto(String id, String pwd, String name, int age, String gender, String email, int auth, String profile,
 			int score) {
 		super();
 		this.id = id;

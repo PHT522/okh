@@ -1,20 +1,17 @@
-package qna.Service;
+package qna;
 
 import java.util.List;
 
-import dto.PagingBean;
-import qna.dao.qnaBbsDao;
-import qna.dao.qnaBbsDaoImpl;
-import qna.dto.QnaDto;
+
 
 public class QnaService implements QnaServiceImpl {
 
 	private static QnaService qnaService = new QnaService();
 	
-	public qnaBbsDaoImpl qnadao;	
+	public QnaBbsDaoImpl qnadao;	
 	
 	private QnaService() {
-		qnadao = new qnaBbsDao();		
+		qnadao = new QnaBbsDao();		
 	}	
 	public static QnaService getInstance() {
 		return qnaService;
@@ -22,10 +19,10 @@ public class QnaService implements QnaServiceImpl {
 	
 	
 	
-	@Override
+	/*@Override
 	public List<QnaDto> getQnaPagingList(PagingBean paging, String searchWord, int search) {
 		return qnadao.getQnaPagingList(paging, searchWord, search);
-	}
+	}*/
 	@Override
 	public List<QnaDto> getQnaList() {
 		return qnadao.getQnaList();
@@ -33,6 +30,10 @@ public class QnaService implements QnaServiceImpl {
 	@Override
 	public boolean writeQnaBbs(QnaDto dto) {		
 		return qnadao.writeQnaBbs(dto);
+	}
+	@Override
+	public List<QnaDto> getBbsPagingList(PagingBean paging) {		
+		return qnadao.getBbsPagingList(paging);
 	}
 	
 	

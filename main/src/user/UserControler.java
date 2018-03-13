@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/UserRegisterServlet")
-public class UserRegisterServlet extends HttpServlet {
+@WebServlet("/UserControler")
+public class UserControler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+       
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doProcess(request, response);
 	}
@@ -24,7 +24,9 @@ public class UserRegisterServlet extends HttpServlet {
 		response.setContentType("text/html;charset=uTF-8");
 		
 		String command = request.getParameter("command");
+		
 		String userID = request.getParameter("userID");
+		String userPassword = request.getParameter("userPassword");
 		String userPassword1 = request.getParameter("userPassword1");
 		String userPassword2 = request.getParameter("userPassword2");
 		String userName = request.getParameter("userName");
@@ -32,10 +34,43 @@ public class UserRegisterServlet extends HttpServlet {
 		String userGender = request.getParameter("userGender");
 		String userEmail = request.getParameter("userEmail");
 		String userProfile = request.getParameter("userProfile");
+
+		IUserService userService = new UserService();
 		
-		if(command.equals("join")) {
+// 로그인
+		if(command.equals("login")) {
+			response.sendRedirect("login.jsp");
+		}else if(command.equals("loginAf")) {
+			if(userID == null || userID.equals("") || userPassword == null || userPassword.equals("")) {
+				request.getSession().setAttribute("messageType", "오류 메시지");
+				request.getSession().setAttribute("messageContent", "모든 내용을 입력해주세요.");
+				response.sendRedirect("login.jsp");
+				return;
+			}
+			
+			UserDto userDto =  userService.login(userID, userPassword);
+			request.getSession().setAttribute("login", userDto);
+			
+			if(userDto != null) {
+				request.getSession().setAttribute("messageType", "성공 메시지");
+				request.getSession().setAttribute("messageContent", "로그인에 성공했습니다.");
+				response.sendRedirect("index.jsp");
+			}else {
+				request.getSession().setAttribute("messageType", "오류 메시지");
+				request.getSession().setAttribute("messageContent", "아이디 비밀번호를 확인해주세요.");
+				response.sendRedirect("login.jsp");
+			}
+		}
+// ID 확인
+		else if(command.equals("check")) {
+			int result = userService.registerCheck(userID);
+			
+			response.getWriter().write(result + "");
+		}
+// 회원 등록
+		else if(command.equals("join")) {
 			response.sendRedirect("join.jsp");
-		}else {
+		}else if(command.equals("joinAf")) {
 			if(userID == null || userID.equals("") || userPassword1 == null || userPassword1.equals("") || userPassword2 == null || userPassword2.equals("") || 
 					userName == null || userName.equals("") || userAge == null || userAge.equals("") || userGender == null || userGender.equals("") || 
 					userEmail == null || userEmail.equals("")) {
@@ -51,8 +86,7 @@ public class UserRegisterServlet extends HttpServlet {
 				return;
 			}
 			
-			UserDao dao = UserDao.getInstance();
-			boolean result = dao.addMember(userID, userPassword1, userName, userAge, userGender, userEmail, null, userProfile);
+			boolean result = userService.addMember(userID, userPassword1, userName, userAge, userGender, userEmail, null, userProfile);
 			
 			if(result) {
 				request.getSession().setAttribute("messageType", "성공 메시지");

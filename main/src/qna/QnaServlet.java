@@ -1,4 +1,4 @@
-package controller;
+package qna;
 
 import java.io.IOException;
 
@@ -8,13 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import qna.Service.QnaService;
-import qna.Service.QnaServiceImpl;
-import qna.dao.qnaBbsDao;
-import qna.dao.qnaBbsDaoImpl;
-import qna.dto.QnaDto;
 
-public class qnaServlet extends HttpServlet {
+
+public class QnaServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -58,10 +54,9 @@ public class qnaServlet extends HttpServlet {
 			
 			service.writeQnaBbs(dto);			
 			
-			RequestDispatcher rd = req.getRequestDispatcher("/qnaServlet?command=listQna");
-
-            rd.forward(req, resp);
-			
+			//RequestDispatcher rd = req.getRequestDispatcher("/qnaServlet?command=listQna");						
+            //rd.forward(req, resp);
+			resp.sendRedirect("qnaServlet?command=listQna");
 			
 		}else if(command.equals("listQna")) {
 			System.out.println("여기는 listQna");
@@ -73,7 +68,7 @@ public class qnaServlet extends HttpServlet {
 			
 			service.getQnaList();
 			
-			RequestDispatcher rd = req.getRequestDispatcher("/qnabbs/listQna.jsp");
+			RequestDispatcher rd = req.getRequestDispatcher("qnabbslist.jsp");
 
             rd.forward(req, resp);
 

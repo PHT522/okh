@@ -16,12 +16,13 @@ public class DBConnection {
 		}
 	}
 	
-	public static Connection getConnection()throws SQLException {
+	public static Connection getConnection() throws SQLException{
 		
-		Connection conn = null;		
-
-		conn = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:xe", "hr", "hr");
-			System.out.println("DB Connection Success");		
+		Connection conn = null;
+		
+		conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "hr", "hr");
+		
+		System.out.println("DB Connection Success");
 		
 		return conn;		
 	}

@@ -1,4 +1,4 @@
-package paging.dto;
+package qna;
 
 public class PagingBean {
 	

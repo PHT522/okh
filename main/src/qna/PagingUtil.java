@@ -1,6 +1,4 @@
-package dto;
-
-import dto.PagingBean;
+package qna;
 
 public class PagingUtil {
 	

@@ -5,23 +5,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import db.DBclose;
+import db.DBClose;
 import db.DBConnection;
 
-public class UserDao {
+public class UserDao implements IUserDao {
 	
-	private static UserDao userDao = new UserDao();
-	
-	private UserDao() {
+	public UserDao() {
 		DBConnection.initConnection();
 	}
-	
-	public static UserDao getInstance() {
-		return userDao;
-	}
-	
-	public UserDTO login(String userID, String userPassword) {
-		UserDTO getDto = null;
+
+	@Override
+	public UserDto login(String userID, String userPassword) {
+		UserDto getDto = null;
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -53,7 +48,7 @@ public class UserDao {
 				String profile = rs.getString(7);
 				int score = rs.getInt(8);
 				
-				getDto = new UserDTO(id, null, name, age, gender, email, auth, profile, score);
+				getDto = new UserDto(id, null, name, age, gender, email, auth, profile, score);
 			}
 			System.out.println("6/6 login Success");
 			
@@ -61,12 +56,13 @@ public class UserDao {
 			System.out.println("Login Fail");
 			e.printStackTrace();
 		} finally {
-			DBclose.close(psmt, conn, rs);
+			DBClose.close(psmt, conn, rs);
 		}
 		
 		return getDto;
 	}
-	
+
+	@Override
 	public int registerCheck(String userID) {
 		String sql = " SELECT ID FROM OKHMEM WHERE ID = '" + userID + "'";
 		
@@ -94,13 +90,15 @@ public class UserDao {
 			System.out.println("registerCheck Fail");
 			e.printStackTrace();
 		} finally {
-			DBclose.close(psmt, conn, rs);
+			DBClose.close(psmt, conn, rs);
 		}
 		
 		return findId;
 	}
-	
-	public boolean addMember(String userID, String userPassword, String userName, String age, String gender, String email, String auth, String profile) {
+
+	@Override
+	public boolean addMember(String userID, String userPassword, String userName, String age, String gender,
+			String email, String auth, String profile) {
 		String sql = " INSERT INTO OKHMEM "
 				+ " (ID, PWD, NAME, AGE, GENDER, EMAIL, AUTH, PROFILE, SCORE) "
 				+ " VALUES(?, ?, ?, ?, ?, ?, 1, ?, 0) ";
@@ -132,7 +130,7 @@ public class UserDao {
 			System.out.println("addMember Fail");
 			e.printStackTrace();
 		} finally {
-			DBclose.close(psmt, conn, null);
+			DBClose.close(psmt, conn, null);
 		}
 		
 		return count>0;

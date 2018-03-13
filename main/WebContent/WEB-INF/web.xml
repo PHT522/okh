@@ -64,7 +64,7 @@
   <!-- qnabbs list -->
   <servlet>
   	<servlet-name>qnaServlet</servlet-name>
-  	<servlet-class>controller.qnaServlet</servlet-class>
+  	<servlet-class>qna.QnaServlet</servlet-class>
   </servlet>
   
   <servlet-mapping>
