@@ -5,12 +5,13 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="css/bootstrap.css">
-	<link rel="stylesheet" href="css/custom.css?ver=1">
+	<link rel="stylesheet" href="css/custom.css">
 	<title>login.jsp</title>
 	<link rel="stylesheet" type="text/css" href="_main.css">
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.js"></script>
+	
 </head>
 <body>
 	<div class="menu">
@@ -20,7 +21,7 @@
 		<input type="button" class="techbbs_hjh" id="techbbs">
 		<input type="button" class="bbs3">
 		<input type="button" class="bbs4">
-		<input type="button" class="bbs5">
+		<input type="button" class="bbs5" id="jobs">
 	</div>
 	<%
 	String userID = null;
@@ -66,7 +67,7 @@
 	</nav>
  --%>	
 	<div class="container">
-		<form action="UserLogin" method="post">
+		<form action="User" method="post">
 			<table class="table table-bordered table-hover" style="text-align: center; border: 1px solid #dddddd">
 				<thead>
 					<th colspan="2"><h4>로그인 양식</h4></th>
@@ -162,10 +163,20 @@
 	<script type="text/javascript">
 	$(function() {
 		$("#login").click(function() {
-			location.href = "UserLogin?command=login";
+			location.href="User?command=login";
 		});
+
 		$("#account").click(function() {
-			location.href = "UserRegister?command=join";
+			location.href="User?command=join";
+		});
+		
+		$("#techbbs").click(function() {
+		      location.href="TechbbsController?command=techbbs";
+		   });
+		
+		
+		$("#jobs").click(function() {
+			location.href="community";
 		});
 	});
 	</script>

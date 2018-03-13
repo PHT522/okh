@@ -9,42 +9,21 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-
-<!-- ====================== 회원기능 ====================== -->
-<!-- 로그인 -->
   <servlet>
-    <servlet-name>UserLoginServlet</servlet-name>
-    <servlet-class>user.UserLoginServlet</servlet-class>
+    <servlet-name>UserControler</servlet-name>
+    <servlet-class>user.UserControler</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>UserLoginServlet</servlet-name>
-    <url-pattern>/UserLogin</url-pattern>
-  </servlet-mapping>
-
-<!-- ID 확인 -->
-  <servlet>
-    <servlet-name>UserRegisterCheckServlet</servlet-name>
-    <servlet-class>user.UserRegisterCheckServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UserRegisterCheckServlet</servlet-name>
-    <url-pattern>/UserRegisterCheck</url-pattern>
-  </servlet-mapping>
-
-<!-- 회원가입 -->
-  <servlet>
-    <servlet-name>UserRegisterServlet</servlet-name>
-    <servlet-class>user.UserRegisterServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UserRegisterServlet</servlet-name>
-    <url-pattern>/UserRegister</url-pattern>
+    <servlet-name>UserControler</servlet-name>
+    <url-pattern>/User</url-pattern>
   </servlet-mapping>
   
- <!-- 기술게시판파일업로드 -->
+  
+  
+  <!-- 기술게시판파일업로드 -->
   <servlet>
     <servlet-name>PdsController</servlet-name>
-    <servlet-class>controller.PdsController</servlet-class>
+    <servlet-class>techpds.PdsController</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>PdsController</servlet-name>
@@ -54,14 +33,14 @@
      <!-- 기술게시판 -->
   <servlet>
     <servlet-name>TechbbsController</servlet-name>
-    <servlet-class>controller.TechbbsController</servlet-class>
+    <servlet-class>techbbs.TechbbsController</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>TechbbsController</servlet-name>
     <url-pattern>/TechbbsController</url-pattern>
   </servlet-mapping>
   
-  <!-- qnabbs list -->
+  <!-- qnabbs 게시판 -->
   <servlet>
   	<servlet-name>qnaServlet</servlet-name>
   	<servlet-class>qna.QnaServlet</servlet-class>
@@ -73,4 +52,67 @@
   </servlet-mapping>
   
   
+  
+  
+  <!-- BBS4 컨트롤러  -->
+  <!-- 설정 부분. 선언 부분. -->
+  <!-- 20180310 맨 아래 커뮤니티 부분 -->
+  <!-- 기본 화면 부분. 계속 컨트롤러 추가하면서 사용하면 된다. -->
+  <servlet>
+  	<servlet-name>community</servlet-name> <!-- 이름 -->
+  	<servlet-class>bbs4ControllerServlet.communityServlet</servlet-class> <!-- 이쪽으로 가라 이 의미. -->
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>community</servlet-name> <!-- 이름 -->
+  	<url-pattern>/community</url-pattern>
+  </servlet-mapping>
+  
+  <!-- BBSboardController 일반 게시판 컨트롤 -->
+  <servlet>
+  	<servlet-name>BBSboardController</servlet-name>
+  	<servlet-class>bbs4ControllerServlet.BBSboardController</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>BBSboardController</servlet-name>
+  	<url-pattern>/BBSboardController</url-pattern>
+  </servlet-mapping>
+  
+  
+  <!-- BBSHWCodingController 컨트롤 -->
+  <servlet>
+  	<servlet-name>BBSHWCodingController</servlet-name>
+  	<servlet-class>bbs4ControllerServlet.BBSHWCodingController</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>BBSHWCodingController</servlet-name>
+  	<url-pattern>*.BBSHWCodingController</url-pattern>
+  	
+  </servlet-mapping>
+  
+  
+  <!-- BBSmaterialsController 컨트롤 -->
+  <servlet>
+  	<servlet-name>BBSmaterialsController</servlet-name>
+  	<servlet-class>bbs4ControllerServlet.BBSmaterialsController</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>BBSmaterialsController</servlet-name>
+  	<url-pattern>/BBSmaterialsController</url-pattern>
+  </servlet-mapping>
+  
+  
+  <!-- detail 컨트롤 -->
+  <servlet>
+  	<servlet-name>custuserDetailControl</servlet-name>
+  	<servlet-class>control.CustUserDetailControl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>custuserDetailControl</servlet-name>
+  	<url-pattern>/custuserdetailcontrol</url-pattern>
+  </servlet-mapping>
 </web-app>
