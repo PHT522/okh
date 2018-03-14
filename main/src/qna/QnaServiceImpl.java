@@ -15,4 +15,5 @@ public interface QnaServiceImpl extends Serializable {
 	public QnaDto getBbs(int seq);
 	
 	public String RemoveHTMLTag(String changeStr);
+	public boolean qnaupdate(QnaDto dto);
 }

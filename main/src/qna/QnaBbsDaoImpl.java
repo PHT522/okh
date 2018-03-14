@@ -18,6 +18,11 @@ public interface QnaBbsDaoImpl {
 	
 	public QnaDto getBbs(int seq);
 	public void readcount(int seq);
+		
+	public boolean qnaupdate(QnaDto dto); //detail에서 update사용
+	
 	
 	public String RemoveHTMLTag(String changeStr);	
+	
+	
 }

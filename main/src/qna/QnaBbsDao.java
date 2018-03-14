@@ -116,6 +116,41 @@ public class QnaBbsDao implements QnaBbsDaoImpl {
 	}
 	*/
 	
+	
+	@Override
+	public boolean qnaupdate(QnaDto dto) {
+		int count = 0;
+		
+		String sql = " UPDATE QNA "
+				+ " SET TITLE = ?, CONTENT = ?, TAG = ?"
+				+ " WHERE SEQ = ? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 qnaupdate Success");
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, dto.getTitle());
+			psmt.setString(2, dto.getContent());
+			psmt.setString(3, dto.getTag());
+			psmt.setInt(4, dto.getSeq());
+			System.out.println("2/6 qnaupdate Success");
+			
+			count = psmt.executeUpdate();
+			System.out.println("3/6 qnaupdate Success");
+		} catch (SQLException e) {
+			System.out.println("qnaupdate Fail");
+			e.printStackTrace();
+		} finally {
+			System.out.println("4/6 qnaupdate Success");
+			DBClose.close(psmt, conn, null);		
+		}
+		return count>0?true:false;
+	}
+	
 	@Override
 	public void readcount(int seq) {
 		String sql = " UPDATE QNA "

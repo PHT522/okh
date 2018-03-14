@@ -1,4 +1,4 @@
-
+<%@page import="qna.QnaDto"%>
 <%@page import="user.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>writeQna.jsp</title>
+<title>qnabbsupdate.jsp</title>
 	<!-- include libraries(jQuery, bootstrap) -->
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
@@ -19,32 +19,23 @@
 	<!-- 태그 이용하기위한-->
 	<link rel="stylesheet" href="css/bootstrap-tagsinput.css">
 	<script src="js/bootstrap-tagsinput.js"></script>
-	
-	<!-- <link rel="stylesheet" type="text/css" href="/main/_qnahbbs.css"> -->
-	<link rel="stylesheet" type="text/css" href="_main.css">
 </head>
 <body>
 
-<div class="menu">
-<jsp:include page="menuinclude.jsp">
-<jsp:param name="actionPath" value="index.jsp"/>
-</jsp:include>
-</div>
 
-
-<div class="wrap">
-<div align="center">
-
-
-<h3>여기는 writeQna입니다.</h3>
+<div class="wrap" align="center">
 
 <%
+// 로그인한 정보
 Object ologin = session.getAttribute("login");
 UserDto mem = (UserDto)ologin;
 %>
-</div>
 
-
+<%
+QnaDto bbs = (QnaDto)session.getAttribute("detailDto");
+String textAlert = (String)session.getAttribute("txtAlert");
+System.out.println(textAlert);
+%>
 <div class="border" align="center">
 <form action="qnaServlet" method="get">
 <table>
@@ -53,27 +44,27 @@ UserDto mem = (UserDto)ologin;
 
 <tr>
 	<td>
-		<input type="hidden" name="command" value="writeQna">
-		<input type="hidden" name="iD" value="<%=mem.getId() %>">
+		<input type="hidden" name="command" value="updateQnaAf">
+		<input type="hidden" name="seq" value="<%=bbs.getSeq() %>">
 		
 	</td>
 </tr>
 
 <tr>
 	<td>
-		<input type="text" name="tItle"  placeholder="제목을 입력하세요" style="width: 800px"><br><br>
+		<input type="text" name="tItle"  placeholder="<%=bbs.getTitle() %>" style="width: 800px"><br><br>
 	</td>	
 </tr>
 
 <tr>
 	<td>
-		<input type="text" name="tAg" id="tAg" data-role="tagsinput" style="width: 800px" value="Q&A" ><br><br>
+		<input type="text" name="tAg" id="tAg" data-role="tagsinput" style="width: 800px" value="<%=bbs.getTag() %>" ><br><br>
 	</td>
 </tr>	
 
 <tr>
 	<td>
-		<textarea rows="10" cols="50" name="cOntent" id="summernote" ></textarea>
+		<textarea rows="10" cols="50" name="cOntent" id="summernote" ><%=bbs.getContent() %></textarea>
 		
 		
 	</td>
@@ -88,8 +79,6 @@ UserDto mem = (UserDto)ologin;
 
 </table>
 </form>
-</div>
-</div>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -102,6 +91,10 @@ $(document).ready(function() {
 });
 </script>
 
+
+
+
+</div>
 
 </body>
 </html>

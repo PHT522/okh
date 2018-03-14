@@ -72,9 +72,57 @@ public class QnaServlet extends HttpServlet {
 
             rd.forward(req, resp);
 			
-		}else if(command.equals("qnaDetail")) {
+		}else if(command.equals("qnaBbsDetail")) {
 			System.out.println("여기는 qnadetail");
+			String Sseq= req.getParameter("seq");
+			int seq = Integer.parseInt(Sseq);	
 			
+			QnaDto dto = service.getBbs(seq);
+						
+			/*req.getSession().setAttribute("detailDto", dto);
+			RequestDispatcher rd = req.getRequestDispatcher("qnabbsdetail.jsp");*/
+			
+			String action = req.getParameter("action").trim();
+			req.getSession().setAttribute("detailDto", dto);
+			RequestDispatcher rd = null;
+			if(action.equals("update")) {
+				rd = req.getRequestDispatcher("qnabbsupdate.jsp");
+				System.out.println("update="+rd);
+			}else if(action.equals("detail")){				
+				rd = req.getRequestDispatcher("qnabbsdetail.jsp");	
+				System.out.println("detail="+rd);
+			}
+			
+			rd.forward(req, resp);
+			
+			
+			
+		
+		}else if(command.equals("updateQnaAf")) {
+			System.out.println("여기는 qnaUpdateAf Servlet");
+			String Sseq= req.getParameter("seq");
+			int seq = Integer.parseInt(Sseq);	
+			
+			QnaDto dto = new QnaDto();
+			// 작성자 id정보 있어야한다.?
+			
+			dto.setTitle(req.getParameter("tItle"));			
+			dto.setContent(req.getParameter("cOntent"));
+			dto.setTag(req.getParameter("tAg"));
+			dto.setSeq(seq);	
+			boolean isS = service.qnaupdate(dto);
+			
+			if(isS) {
+				req.getSession().setAttribute("txtAlert", "수정 되었습니다.");
+			}else {
+				req.getSession().setAttribute("txtAlert", "수정이 안되었습니다.");
+			}
+			
+			RequestDispatcher rd = req.getRequestDispatcher("qnabbslist.jsp");
+			rd.forward(req, resp);
+			
+		}else if(command.equals("updateQna")) {
+			//detail과 합침
 		}
 		
 		

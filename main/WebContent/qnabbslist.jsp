@@ -152,9 +152,9 @@ List<QnaDto> qnalist = service.getQnaPagingList(paging, findWord, cho);
 	</tr>
 	<tr>
 		<td colspan="2" style="border-bottom: 1px solid #444444; ">
-			게시물 타이틀 : 
-			<%-- <a href="bbsdetail.jsp?seq=<%=qna.getSeq() %>"> --%>
-			<a href="qnabbsdetail.jsp?seq=<%=qna.getSeq() %>">
+			게시물 타이틀 :			
+			<%-- <a href="qnabbsdetail.jsp?seq=<%=qna.getSeq() %>"> --%> 
+			<a href="qnaServlet?command=qnaBbsDetail&seq=<%=qna.getSeq() %>&action=detail">
 			 <%=qna.getTitle() %>
 			</a>
 		</td>		

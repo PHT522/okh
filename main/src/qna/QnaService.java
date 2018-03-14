@@ -44,6 +44,11 @@ public class QnaService implements QnaServiceImpl {
 	public String RemoveHTMLTag(String changeStr) {
 		return qnadao.RemoveHTMLTag(changeStr);
 	}
+	@Override
+	public boolean qnaupdate(QnaDto dto) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 	
 }
