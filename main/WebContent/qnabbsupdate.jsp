@@ -32,19 +32,20 @@ UserDto mem = (UserDto)ologin;
 %>
 
 <%
-QnaDto bbs = (QnaDto)session.getAttribute("detailDto");
-String textAlert = (String)session.getAttribute("txtAlert");
-System.out.println(textAlert);
+//seq에따른 getbbs를 통해 가져옴 dto정보 불러오기위해
+QnaDto bbs = (QnaDto)session.getAttribute("detailDto");	
+
 %>
 <div class="border" align="center">
 <form action="qnaServlet" method="get">
 <table>
-
+<col width="100"><col width="400"><col width="150">
 <tr>현제 접속 아이디는:<%=mem.getId() %> </tr>
 
 <tr>
 	<td>
 		<input type="hidden" name="command" value="updateQnaAf">
+		<input type="hidden" name="iD" value="<%=bbs.getId() %>">
 		<input type="hidden" name="seq" value="<%=bbs.getSeq() %>">
 		
 	</td>
@@ -64,7 +65,9 @@ System.out.println(textAlert);
 
 <tr>
 	<td>
-		<textarea rows="10" cols="50" name="cOntent" id="summernote" ><%=bbs.getContent() %></textarea>
+		<textarea rows="10" cols="50" name="cOntent" id="summernote" >
+			<%=bbs.getContent() %>
+		</textarea>
 		
 		
 	</td>

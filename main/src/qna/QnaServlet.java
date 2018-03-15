@@ -103,14 +103,25 @@ public class QnaServlet extends HttpServlet {
 			String Sseq= req.getParameter("seq");
 			int seq = Integer.parseInt(Sseq);	
 			
-			QnaDto dto = new QnaDto();
-			// 작성자 id정보 있어야한다.?
+			System.out.println("seq is " + seq);
+			System.out.println("id is " + req.getParameter("iD").trim());
+			System.out.println("title is " + req.getParameter("tItle").trim());
+			System.out.println("content is " + req.getParameter("cOntent").trim());
+			System.out.println("tag is " + req.getParameter("tAg").trim());
 			
-			dto.setTitle(req.getParameter("tItle"));			
-			dto.setContent(req.getParameter("cOntent"));
-			dto.setTag(req.getParameter("tAg"));
-			dto.setSeq(seq);	
-			boolean isS = service.qnaupdate(dto);
+			/*QnaDto dto = new QnaDto(
+					req.getParameter("iD").trim(),
+					req.getParameter("tItle").trim(),
+					req.getParameter("cOntent").trim(),
+					req.getParameter("tAg").trim());		*/
+			QnaDto dto = new QnaDto();
+			
+			dto.setSeq(seq);
+			dto.setTitle(req.getParameter("tItle").trim());			
+			dto.setContent(req.getParameter("cOntent").trim());
+			dto.setTag(req.getParameter("tAg").trim());		
+			boolean isS = service.qnaupdate(dto);			
+			System.out.println("isS is " +isS);
 			
 			if(isS) {
 				req.getSession().setAttribute("txtAlert", "수정 되었습니다.");
@@ -118,8 +129,9 @@ public class QnaServlet extends HttpServlet {
 				req.getSession().setAttribute("txtAlert", "수정이 안되었습니다.");
 			}
 			
-			RequestDispatcher rd = req.getRequestDispatcher("qnabbslist.jsp");
-			rd.forward(req, resp);
+			/*RequestDispatcher rd = req.getRequestDispatcher("qnabbslist.jsp");
+			rd.forward(req, resp);*/
+			resp.sendRedirect("qnaServlet?command=listQna");
 			
 		}else if(command.equals("updateQna")) {
 			//detail과 합침

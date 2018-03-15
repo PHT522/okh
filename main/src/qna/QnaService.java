@@ -46,8 +46,7 @@ public class QnaService implements QnaServiceImpl {
 	}
 	@Override
 	public boolean qnaupdate(QnaDto dto) {
-		// TODO Auto-generated method stub
-		return false;
+		return qnadao.qnaupdate(dto);
 	}
 	
 	

@@ -118,15 +118,15 @@ public class QnaBbsDao implements QnaBbsDaoImpl {
 	
 	
 	@Override
-	public boolean qnaupdate(QnaDto dto) {
-		int count = 0;
-		
+	public boolean qnaupdate(QnaDto dto) {		
 		String sql = " UPDATE QNA "
 				+ " SET TITLE = ?, CONTENT = ?, TAG = ?"
 				+ " WHERE SEQ = ? ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
+				
+		int count = 0;
 		
 		try {
 			conn = DBConnection.getConnection();
@@ -140,6 +140,7 @@ public class QnaBbsDao implements QnaBbsDaoImpl {
 			System.out.println("2/6 qnaupdate Success");
 			
 			count = psmt.executeUpdate();
+			System.out.println("count = " + count);
 			System.out.println("3/6 qnaupdate Success");
 		} catch (SQLException e) {
 			System.out.println("qnaupdate Fail");

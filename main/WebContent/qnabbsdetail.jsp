@@ -19,24 +19,17 @@
 	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script> 
 	
+	<!-- 태그 이용하기위한-->
+	<link rel="stylesheet" href="css/bootstrap-tagsinput.css">
+	<script src="js/bootstrap-tagsinput.js"></script>
+	
 	<!-- include summernote-ko-KR -->
 	<script src="lang/summernote-ko-KR.js"></script>
 
 
-	<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
-	<link rel="stylesheet" href="css/bootstrap.css">
-	<link rel="stylesheet" href="css/custom.css">
-	<link rel="stylesheet" type="text/css" href="_main.css">
-	
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/bootstrap.js"></script>
 </head>
 <body>
-<div class="menu">
-<jsp:include page="menuinclude.jsp">
-<jsp:param name="actionPath" value="index.jsp"/>
-</jsp:include>
-</div>
+
 
 <%
 // 로그인한 정보
@@ -73,21 +66,28 @@ QnaDto bbs = (QnaDto)session.getAttribute("detailDto");
 <h3>여기는 qnabbsdetail.jsp</h3>
 </div>
 
-<div class="wrap">
+<div class="border" align="center">
 
-<table style="border: 1px solid; width: 100%">
+<table border="1">
 <col width="100"><col width="400"><col width="150">
 <tr>
 	<td colspan="2" >작성자: <%=bbs.getId() %> </td>
-	<td style="border: 1px solid;">답변수:<%=bbs.getAnswercount() %>/조회수:<%=bbs.getReadcount() %></td>
+	<td >답변수:<%=bbs.getAnswercount() %>/조회수:<%=bbs.getReadcount() %></td>
 </tr>
 <tr>
-	<td>번호:<%=bbs.getRef() %></td>
-	<td>테그:<%=bbs.getTag() %></td>
-	<td rowspan="2" style="border: 1px solid;">좋아요 구현</td>
+	<td colspan="2">번호:<%=bbs.getRef() %></td>
+	<td rowspan="3">좋아요 구현</td>
+</tr>
+<tr>
+	<td colspan="2">
+		<input type="text" name="tAg" id="tAg" data-role="tagsinput" value="<%=bbs.getTag() %>" ><br><br>
+	</td>	
 </tr>
 <tr>
 	<td colspan="2" >
+		<%-- <textarea rows="10" cols="50" name="cOntent" id="summernote" >
+			<%=bbs.getContent() %>
+		</textarea>		 --%>
 		<%-- <textarea  rows="30" cols="50" id="summernote" readonly="readonly" style="width: 100%;" >		
 		<%=bbs.getContent() %> 
 		</textarea> --%>		
@@ -97,7 +97,6 @@ QnaDto bbs = (QnaDto)session.getAttribute("detailDto");
 		</article> 
 	</td>
 </tr>
-
 </table>
 
 <% if(bbs.getId().equals(mem.getId())){ %>
@@ -108,6 +107,39 @@ QnaDto bbs = (QnaDto)session.getAttribute("detailDto");
 <%} %>
 
 </div>
+<br><br><br><br><br><br>
+<!-- 답변 시작 -->
+<div>
+<form action="">
+<table border="1" align="center">
+<col width="500"><col width="150">
+<tr>
+	<td>
+		<input type="hidden" name="iD" value="<%=mem.getId()%>">
+		
+	</td>
+</tr>
+<tr>
+	<td> 이글에 대한답변 수 : <%=bbs.getAnswercount() %> </td>
+	<td rowspan="2"> 
+		<input type="submit" value="등록">
+	</td> 
+</tr>
+<tr>
+	<td>
+		<textarea id="summernote" name="cOntent"></textarea>
+	</td>
+</tr>	
+</table>
+</form>
+</div>
+
+
+
+
+<!-- 답변 끝 -->
+
+
 
 <script type="text/javascript">
 // 업데이트와 델리트를 위한 함수설정
@@ -116,8 +148,7 @@ function updatebbs( seq ) {
 	location.href = "qnaServlet?command=qnaBbsDetail&action=update&seq="+seq;
 }
 function deletebbs(seq) {	
-	location.href = "deletebbs.jsp?seq=" + seq;
-	alert("delSeq:"+seq);
+	// 추후 추가
 }
 
 </script>
@@ -126,11 +157,13 @@ function deletebbs(seq) {
 <script type="text/javascript">
 $(document).ready(function() {
     $('#summernote').summernote({
-            height: 300,                 // set editor height
+            height: 150,                 // set editor height
             minHeight: null,             // set minimum height of editor
             maxHeight: null,             // set maximum height of editor
             focus: true                  // set focus to editable area after initializing summernote
     });
+    //$('#summernote').summernote('disable');
+   // $(".note-editable").attr("contenteditable","false")
 });
 </script>
 
