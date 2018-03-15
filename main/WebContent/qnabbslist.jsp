@@ -47,7 +47,7 @@ tr,td {
 </jsp:include>
 </div>
 
-<%
+<%--
 
 //로그인정보
 Object ologin = session.getAttribute("login");
@@ -59,7 +59,7 @@ List<QnaDto> qnalist = dao.getQnaList(); */
 
 //QnaServiceImpl service = QnaService.getInstance();
 //List<QnaDto> qnalist = service.getQnaList();
-%>
+--%>
 
 <%
 //페이징 처리

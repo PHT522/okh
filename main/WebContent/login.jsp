@@ -170,7 +170,7 @@
 
 		$("#account").click(function() {
 			location.href="User?command=join";
-		});
+		});	
 		
 		$("#techbbs").click(function() {
 		      location.href="TechbbsController?command=techbbs";

@@ -45,6 +45,7 @@
 				location.href="qnaServlet?command=listQna";				
 			});
 			
+			
 			$("#second").click(function() {
 				location.href="second.jsp";
 			});
