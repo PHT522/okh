@@ -102,18 +102,7 @@ public class QnaServlet extends HttpServlet {
 			System.out.println("여기는 qnaUpdateAf Servlet");
 			String Sseq= req.getParameter("seq");
 			int seq = Integer.parseInt(Sseq);	
-			
-			System.out.println("seq is " + seq);
-			System.out.println("id is " + req.getParameter("iD").trim());
-			System.out.println("title is " + req.getParameter("tItle").trim());
-			System.out.println("content is " + req.getParameter("cOntent").trim());
-			System.out.println("tag is " + req.getParameter("tAg").trim());
-			
-			/*QnaDto dto = new QnaDto(
-					req.getParameter("iD").trim(),
-					req.getParameter("tItle").trim(),
-					req.getParameter("cOntent").trim(),
-					req.getParameter("tAg").trim());		*/
+						
 			QnaDto dto = new QnaDto();
 			
 			dto.setSeq(seq);
@@ -135,6 +124,25 @@ public class QnaServlet extends HttpServlet {
 			
 		}else if(command.equals("updateQna")) {
 			//detail과 합침
+		}else if(command.equals("writeAnswer")) {
+			//답변 내용 적용
+			QnaDto dto = new QnaDto();
+			String id = req.getParameter("iD").trim();
+			String title = req.getParameter("tItle").trim();			
+			String Sanswercount = req.getParameter("aNswerCount").trim();
+			int answercount = Integer.parseInt(Sanswercount);
+			int seq = Integer.parseInt(req.getParameter("seq").trim());
+			String tag = "tag";
+			
+			dto.setId(id);
+			dto.setTitle(title);			
+			dto.setAnswercount(answercount);
+			dto.setSeq(seq);
+			dto.setTag(tag);
+			boolean isS = service.answer(seq, dto);
+			resp.sendRedirect("qnaServlet?command=listQna");
+			//resp.sendRedirect("qnabbswrite.jsp");
+			
 		}
 		
 		

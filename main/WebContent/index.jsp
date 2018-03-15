@@ -42,7 +42,7 @@
 				location.href="User?command=join";
 			});
 			$("#qnabbs").click(function() {
-				location.href="qnaServlet?command=listQna";
+				location.href="qnaServlet?command=listQna";				
 			});
 			
 			$("#second").click(function() {

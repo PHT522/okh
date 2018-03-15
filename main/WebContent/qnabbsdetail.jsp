@@ -110,13 +110,16 @@ QnaDto bbs = (QnaDto)session.getAttribute("detailDto");
 <br><br><br><br><br><br>
 <!-- 답변 시작 -->
 <div>
-<form action="">
+<form action="qnaServlet">
 <table border="1" align="center">
 <col width="500"><col width="150">
 <tr>
 	<td>
-		<input type="hidden" name="iD" value="<%=mem.getId()%>">
-		
+		<input type="hidden" name="command" value="writeAnswer" >
+		<input type="hidden" name="iD" value="<%=mem.getId()%>">	<!-- 답변 작성 아이디 -->
+		<input type="hidden" name="tItle" value="<%=bbs.getTitle() %>">	<!-- 답변에 사용한 타이틀 필요없다-->
+		<input type="hidden" name="aNswerCount" value="<%=bbs.getAnswercount() %>"> <!-- 현재의 답변 카운트를 넘겨준다 -->
+		<input type="hidden" name="seq" value="<%=bbs.getSeq() %>">
 	</td>
 </tr>
 <tr>

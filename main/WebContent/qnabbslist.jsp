@@ -27,7 +27,6 @@ String choice = request.getParameter("choice");
 	
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.js"></script>
-	
 <style type="text/css">
 table {
 	width: 100%;
@@ -37,7 +36,8 @@ tr,td {
 	border: 1px ;
 	
 }
-</style>		
+</style>
+	
 </head>
 <body>
 
@@ -70,6 +70,7 @@ if(request.getParameter("nowPage") == null){
 	paging.setNowPage(Integer.parseInt(request.getParameter("nowPage")));
 }
 %>
+
 <%
 QnaServiceImpl service = QnaService.getInstance();
 List<QnaDto> qnalist = service.getBbsPagingList(paging);

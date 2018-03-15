@@ -20,10 +20,10 @@ public class QnaService implements QnaServiceImpl {
 	
 	
 	
-	/*@Override
+	@Override
 	public List<QnaDto> getQnaPagingList(PagingBean paging, String searchWord, int search) {
 		return qnadao.getQnaPagingList(paging, searchWord, search);
-	}*/
+	}
 	@Override
 	public List<QnaDto> getQnaList() {
 		return qnadao.getQnaList();
@@ -47,6 +47,10 @@ public class QnaService implements QnaServiceImpl {
 	@Override
 	public boolean qnaupdate(QnaDto dto) {
 		return qnadao.qnaupdate(dto);
+	}
+	@Override
+	public boolean answer(int seq, QnaDto dto) {
+		return qnadao.answer(seq, dto);
 	}
 	
 	

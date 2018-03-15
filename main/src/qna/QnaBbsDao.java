@@ -23,7 +23,94 @@ public class QnaBbsDao implements QnaBbsDaoImpl {
 		return qNaDao;
 	}*/
 	
-	/*@Override
+	@Override
+	public boolean answer(int seq, QnaDto dto) {
+		int count = 0;
+		// update : 기존의 댓글들을 한칸(STEP)씩 진행시키는 작업
+		String sql1 = " UPDATE QNA "
+				+ " SET STEP=STEP+1 "
+				+ " WHERE REF=(SELECT REF FROM QNA WHERE SEQ=?) "
+				+ "	  AND STEP > (SELECT STEP FROM QNA WHERE SEQ=?) ";
+		
+		/*String sql = " INSERT INTO QNA"
+				+ " (SEQ, ID, REF, STEP, DEPTH, "
+				+ " TITLE, CONTENT, TAG, WDATE, PARENT,"
+				+ " DEL, READCOUNT, FAVOR, LVPOINT, ANSWERCOUNT) "
+				+ " VALUES"
+				+ " (SEQ_QNA.NEXTVAL, ?, (SELECT NVL(MAX(REF),0)+1 FROM QNA), 0, 0, "
+				+ " ?, ?, ?, SYSDATE, 0, "
+				+ " 0, 0, 0, 0, 0) ";*/
+		
+		String sql2 = " INSERT INTO QNA "
+				+ " (SEQ, ID, REF, STEP, DEPTH, "
+				+ " TITLE, CONTENT, TAG, WDATE, PARENT, DEL, "
+				+ " READCOUNT, FAVOR, LVPOINT, ANSWERCOUNT) "
+				+ " VALUES (SEQ_QNA.NEXTVAL, ?, "
+				+ "		(SELECT REF FROM QNA WHERE SEQ=? ), "
+				+ "		(SELECT STEP FROM QNA WHERE SEQ=? )+1, "
+				+ " 	(SELECT DEPTH FROM QNA WHERE SEQ=?)+1, "
+				+ "		 ?, ?, ?, SYSDATE, ?, 0, "
+				+ "		0, 0, 0, (SELECT NVA(MAX(ANSWERCOUNT),0)+1 FROM QNA WHERE SEQ=?)";
+		
+		Connection conn = null;		
+		PreparedStatement psmt = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			conn.setAutoCommit(false);
+			System.out.println("1/6 answer Success");
+			
+			psmt = conn.prepareStatement(sql1);
+			psmt.setInt(1, seq);
+			psmt.setInt(2, seq);
+			System.out.println("2/6 answer Success");
+			
+			count = psmt.executeUpdate();
+			System.out.println("3/6 answer Success");
+			
+			psmt.clearParameters();
+			
+			psmt = conn.prepareStatement(sql2);
+			psmt.setString(1, dto.getId());
+			psmt.setInt(2, seq);
+			psmt.setInt(3, seq);
+			psmt.setInt(4, seq);
+			psmt.setString(5, dto.getTitle());// 부모글의 타이틀 가져옴
+			psmt.setString(6, dto.getContent());
+			psmt.setString(7, dto.getTag());
+			psmt.setInt(8, seq);	// parent를 부모의 seq로
+			psmt.setInt(9, seq);
+			System.out.println("4/6 answer Success");
+			System.out.println("dto = " + dto.toString());
+			count = psmt.executeUpdate();
+			conn.commit();
+			System.out.println("5/6 answer Success");
+			
+		} catch (SQLException e) {
+			System.out.println("answer fail");			
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}			
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.setAutoCommit(true);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			DBClose.close(psmt, conn, null);
+			System.out.println("6/6 answer Success");	
+		}
+		
+		
+		return count>0;
+	}
+	
+	@Override
 	public List<QnaDto> getQnaPagingList(PagingBean paging, String searchWord, int search) {
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -69,7 +156,7 @@ public class QnaBbsDao implements QnaBbsDaoImpl {
 			// REF 역순 STEP 정순
 			// 시작위치를 정해주고 갯수10개(paging.getCountPerPage())를 가져온다
 			String sql = " SELECT * FROM "
-						+ " (SELECT * FROM (SELECT * FROM BBS " + sWord + " ORDER BY REF ASC, STEP DESC)"
+						+ " (SELECT * FROM (SELECT * FROM QNA " + sWord + " ORDER BY REF ASC, STEP DESC)"
 						+ "  WHERE ROWNUM <=" + paging.getStartNum() + " ORDER BY REF DESC, STEP ASC) "
 						+ "WHERE ROWNUM <=" + paging.getCountPerPage();
 			
@@ -108,13 +195,13 @@ public class QnaBbsDao implements QnaBbsDaoImpl {
 			e.printStackTrace();
 			System.out.println("getBbsPagingList Fail");
 		} finally {
-			DBclose.close(psmt, conn, rs);
+			DBClose.close(psmt, conn, rs);
 			System.out.println("6/6 getBbsPagingList Success");	
 		}
 		
 		return list;
 	}
-	*/
+	
 	
 	
 	@Override
@@ -284,7 +371,7 @@ public class QnaBbsDao implements QnaBbsDaoImpl {
 			System.out.println("4/6 getBbsPagingList Success");
 			
 			while (rs.next()) {							// 하나만 갖고오므로 while말고 조건문if한다
-				int i = 1;
+				
 				QnaDto dto = new QnaDto(rs.getInt(1),		//seq,
 						rs.getString(2),	//id,
 						rs.getInt(3),		//ref,
