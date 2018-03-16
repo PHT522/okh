@@ -21,12 +21,12 @@ String choice = request.getParameter("choice");
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>listQna.jsp</title>
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
-	<link rel="stylesheet" href="css/bootstrap.css">
+	<!-- <link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/custom.css">
 	<link rel="stylesheet" type="text/css" href="_main.css">
 	
 	<script src="js/bootstrap.min.js"></script>
-	<script src="js/bootstrap.js"></script>
+	<script src="js/bootstrap.js"></script> -->
 <style type="text/css">
 table {
 	width: 100%;
@@ -40,13 +40,13 @@ tr,td {
 	
 </head>
 <body>
-
+<%-- 
 <div class="menu">
 <jsp:include page="menuinclude.jsp">
 <jsp:param name="actionPath" value="index.jsp"/>
 </jsp:include>
 </div>
-
+ --%>
 <%--
 
 //로그인정보

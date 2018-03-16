@@ -1,3 +1,4 @@
+<%@page import="qna.QnaAnswerDto"%>
 <%@page import="org.apache.jasper.tagplugins.jstl.core.Remove"%>
 <%@page import="user.UserDto"%>
 <%@page import="qna.QnaDto"%>
@@ -5,6 +6,12 @@
 <%@page import="qna.QnaServiceImpl"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<% request.setCharacterEncoding("utf-8");%>
+<fmt:requestEncoding value="utf-8" />
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -25,8 +32,12 @@
 	
 	<!-- include summernote-ko-KR -->
 	<script src="lang/summernote-ko-KR.js"></script>
+<style type="text/css">
+#main{
+ overflow: auto;
+}
 
-
+</style>
 </head>
 <body>
 
@@ -108,16 +119,23 @@ QnaDto bbs = (QnaDto)session.getAttribute("detailDto");
 
 </div>
 <br><br><br><br><br><br>
+
 <!-- 답변 시작 -->
-<div>
+<%
+
+
+
+%>
+
+
+<div id="comment">
 <form action="qnaServlet">
 <table border="1" align="center">
 <col width="500"><col width="150">
 <tr>
 	<td>
 		<input type="hidden" name="command" value="writeAnswer" >
-		<input type="hidden" name="iD" value="<%=mem.getId()%>">	<!-- 답변 작성 아이디 -->
-		<input type="hidden" name="tItle" value="<%=bbs.getTitle() %>">	<!-- 답변에 사용한 타이틀 필요없다-->
+		<input type="hidden" name="iD" value="<%=mem.getId()%>">	<!-- 답변 작성 아이디 -->		
 		<input type="hidden" name="aNswerCount" value="<%=bbs.getAnswercount() %>"> <!-- 현재의 답변 카운트를 넘겨준다 -->
 		<input type="hidden" name="seq" value="<%=bbs.getSeq() %>">
 	</td>

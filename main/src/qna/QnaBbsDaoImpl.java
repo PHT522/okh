@@ -2,10 +2,6 @@ package qna;
 
 import java.util.List;
 
-
-
-
-
 public interface QnaBbsDaoImpl {
 
 	public List<QnaDto> getQnaList();

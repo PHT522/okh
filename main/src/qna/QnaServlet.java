@@ -126,6 +126,7 @@ public class QnaServlet extends HttpServlet {
 			//detail과 합침
 		}else if(command.equals("writeAnswer")) {
 			//답변 내용 적용
+			/*
 			QnaDto dto = new QnaDto();
 			String id = req.getParameter("iD").trim();
 			String title = req.getParameter("tItle").trim();			
@@ -142,6 +143,22 @@ public class QnaServlet extends HttpServlet {
 			boolean isS = service.answer(seq, dto);
 			resp.sendRedirect("qnaServlet?command=listQna");
 			//resp.sendRedirect("qnabbswrite.jsp");
+			*/
+			System.out.println("writeanswer servlet");
+			int seq = Integer.parseInt(req.getParameter("seq").trim());
+			
+			QnaAnswerDto dto = new QnaAnswerDto();
+			
+			dto.setId(req.getParameter("iD").trim());
+			//dto.setComment_num(comment_num);
+			dto.setContent(req.getParameter("cOntent").trim());
+			dto.setChild(seq);
+			
+			service.writeAnswer(dto, seq);
+			
+		//	RequestDispatcher rd = req.getRequestDispatcher("qnabbsdetail.jsp");
+			RequestDispatcher rd = req.getRequestDispatcher("qnabbslist.jsp");
+            rd.forward(req, resp);
 			
 		}
 		

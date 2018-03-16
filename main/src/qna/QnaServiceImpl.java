@@ -12,11 +12,13 @@ public interface QnaServiceImpl extends Serializable {
 	public boolean writeQnaBbs(QnaDto dto);
 	public List<QnaDto> getQnaPagingList(PagingBean paging, String searchWord, int search);
 	public List<QnaDto> getBbsPagingList(PagingBean paging);
-	public QnaDto getBbs(int seq);
-	
+	public QnaDto getBbs(int seq);	
 	public String RemoveHTMLTag(String changeStr);
-	public boolean qnaupdate(QnaDto dto);
-	
+	public boolean qnaupdate(QnaDto dto);	
 	public boolean answer(int seq, QnaDto dto);
+	
+	//////////////////////////////////////////
+	public boolean writeAnswer(QnaAnswerDto dto, int seq);
+	
 
 }
