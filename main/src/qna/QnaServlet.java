@@ -147,12 +147,13 @@ public class QnaServlet extends HttpServlet {
 			System.out.println("writeanswer servlet");
 			int seq = Integer.parseInt(req.getParameter("seq").trim());
 			
-			QnaAnswerDto dto = new QnaAnswerDto();
+			//QnaAnswerDto dto = new QnaAnswerDto();
+			QnaDto dto = new QnaDto();
 			
 			dto.setId(req.getParameter("iD").trim());
 			//dto.setComment_num(comment_num);
 			dto.setContent(req.getParameter("cOntent").trim());
-			dto.setChild(seq);
+			dto.setAnswercount(Integer.parseInt(req.getParameter("aNswerCount").trim()));
 			
 			service.writeAnswer(dto, seq);
 			

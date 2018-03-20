@@ -18,7 +18,7 @@ public interface QnaServiceImpl extends Serializable {
 	public boolean answer(int seq, QnaDto dto);
 	
 	//////////////////////////////////////////
-	public boolean writeAnswer(QnaAnswerDto dto, int seq);
+	public boolean writeAnswer(QnaDto dto, int seq);
 	
 
 }

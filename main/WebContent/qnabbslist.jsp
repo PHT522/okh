@@ -72,6 +72,7 @@ if(request.getParameter("nowPage") == null){
 %>
 
 <%
+// 리스트 뿌려주기위해
 QnaServiceImpl service = QnaService.getInstance();
 List<QnaDto> qnalist = service.getBbsPagingList(paging);
 
@@ -141,7 +142,8 @@ List<QnaDto> qnalist = service.getQnaPagingList(paging, findWord, cho);
 	<%
 	}
 	for(int i = 0; i<qnalist.size(); i++){
-		QnaDto qna = qnalist.get(i);		
+		QnaDto qna = qnalist.get(i);	
+		if(qna.getStep()==0){	// 댓글 안보이게 하기위해
 	%>
 	
 	<tr>
@@ -162,7 +164,7 @@ List<QnaDto> qnalist = service.getQnaPagingList(paging, findWord, cho);
 	</tr>	
 	
 	<%
-	}
+	}}
 	%>
 	
 	

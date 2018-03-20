@@ -58,7 +58,7 @@ public class QnaService implements QnaServiceImpl {
 	//////////////////////////////////////////////
 	
 	@Override
-	public boolean writeAnswer(QnaAnswerDto dto, int seq) {
+	public boolean writeAnswer(QnaDto dto, int seq) {
 		return qnaanswerdao.writeAnswer(dto, seq);
 	}
 	

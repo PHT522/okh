@@ -12,9 +12,9 @@ import db.DBConnection;
 public class QnaAnswerDao implements QnaAnswerDaoImpl {
 
 	@Override
-	public boolean writeAnswer(QnaAnswerDto dto, int seq) {
+	public boolean writeAnswer(QnaDto dto, int seq) {
 		
-		String sql2 = " UPDATE QNA "
+		/*String sql2 = " UPDATE QNA "
 				+ " SET DEPTH = DEPTH+1 "
 				+ " WHERE SEQ = (SELECT CHILD FROM QNAANSWER WHERE CHILD=? )";
 		
@@ -29,8 +29,26 @@ public class QnaAnswerDao implements QnaAnswerDaoImpl {
 				+ " (SEQ_QNAANSWER.NEXTVAL, ?,"
 				+ " (SELECT DEPTH FROM QNA WHERE SEQ=? )+1 "
 				+ " , ?, SYSDATE, "
-				+ " ?, 0, 0)";
+				+ " ?, 0, 0)";*/
 	
+		String sql1 = " UPDATE QNA "
+				+ " SET STEP=STEP+1, ANSWERCOUNT=ANSWERCOUNT+1 "
+				+ " WHERE REF=(SELECT REF FROM QNA WHERE SEQ=?) "
+				+ "	  AND STEP > (SELECT STEP FROM QNA WHERE SEQ=?) ";
+		
+		
+		// insert
+		String sql2 = " INSERT INTO QNA "
+				+ " (SEQ, ID, REF, STEP, DEPTH, "
+				+ " TITLE, CONTENT, TAG, WDATE, PARENT, DEL, READCOUNT, "
+				+ " FAVOR, LVPOINT, ANSWERCOUNT ) "
+				+ " VALUES(SEQ_QNA.NEXTVAL, ?, "
+				+ "		(SELECT REF FROM QNA WHERE SEQ=? ), "	// REF
+				+ " 	(SELECT STEP FROM QNA WHERE SEQ=? )+1, "
+				+ "		(SELECT DEPTH FROM QNA WHERE SEQ=? )+1, "
+				+ "		?, ?, ?, SYSDATE, ?, 0, 0, "
+				+ "		0, 0, ?) ";
+		
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		
@@ -43,10 +61,8 @@ public class QnaAnswerDao implements QnaAnswerDaoImpl {
 			
 			psmt = conn.prepareStatement(sql1);
 			System.out.println("2/6 writeAnswer Success");
-			psmt.setString(1, dto.getId());
-			psmt.setInt(2, seq);	
-			psmt.setString(3, dto.getContent());
-			psmt.setInt(4, dto.getChild());		
+			psmt.setInt(1, seq);
+			psmt.setInt(2, seq);
 				
 			count = psmt.executeUpdate();
 			System.out.println("3/6 writeAnswer Success");
@@ -54,7 +70,15 @@ public class QnaAnswerDao implements QnaAnswerDaoImpl {
 			psmt.clearParameters();
 			
 			psmt = conn.prepareStatement(sql2);
-			psmt.setInt(1, dto.getChild());
+			psmt.setString(1, dto.getId());
+			psmt.setInt(2, seq);
+			psmt.setInt(3, seq);
+			psmt.setInt(4, seq);
+			psmt.setString(5, seq+"타이틀");
+			psmt.setString(6, dto.getContent());
+			psmt.setString(7, seq+"테그");
+			psmt.setInt(8, seq);
+			psmt.setInt(9, dto.getAnswercount() + 1);
 			System.out.println("4/6 writeAnswer Success");	
 			
 			count = psmt.executeUpdate();

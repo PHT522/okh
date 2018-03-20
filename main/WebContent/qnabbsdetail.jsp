@@ -1,3 +1,5 @@
+<%@page import="qna.PagingBean"%>
+<%@page import="java.util.List"%>
 <%@page import="qna.QnaAnswerDto"%>
 <%@page import="org.apache.jasper.tagplugins.jstl.core.Remove"%>
 <%@page import="user.UserDto"%>
@@ -32,6 +34,30 @@
 	
 	<!-- include summernote-ko-KR -->
 	<script src="lang/summernote-ko-KR.js"></script>
+	
+	<!-- ajax prototype 불러오기 -->
+	<script src="js/prototype.js"></script>	
+	
+	<script type="text/javascript">
+	Event.observe(window, "load", 
+			function(){
+				process()
+			}	
+		);
+	
+	function process() {
+		var divNode = null;
+		Event.observe("summernotebefore", "click", keyPressProcess);
+		function keyPressProcess() {
+			
+		}
+	}
+	
+
+	
+	</script>
+	
+	
 <style type="text/css">
 #main{
  overflow: auto;
@@ -40,6 +66,10 @@
 </style>
 </head>
 <body>
+
+
+
+
 
 
 <%
@@ -122,10 +152,66 @@ QnaDto bbs = (QnaDto)session.getAttribute("detailDto");
 
 <!-- 답변 시작 -->
 <%
-
-
+//페이징 처리
+PagingBean paging = new PagingBean();
+if(request.getParameter("nowPage") == null){
+	paging.setNowPage(1);		// 처음에는 1페이지로 셋팅
+}else{
+	paging.setNowPage(Integer.parseInt(request.getParameter("nowPage")));
+}
+QnaServiceImpl service = QnaService.getInstance();
+List<QnaDto> qnalist = service.getBbsPagingList(paging);
 
 %>
+
+<!-- 리스트 보여주기 -->
+<div align="center">
+<table border="1">
+<col width="500"><col width="150">
+	
+	
+	<%
+	if(qnalist == null || qnalist.size() == 0){
+	
+	%>	
+	<tr>
+		<td colspan="5">작성된 글이 없습니다.</td>
+	</tr>
+	<%
+	}
+	%>
+	<tr>
+		<td align="left">	</td>		
+	</tr>
+	
+	<%
+	for(int i = 0; i<qnalist.size(); i++){
+		QnaDto qna = qnalist.get(i);	
+		if(bbs.getSeq()==qna.getParent()){
+	%>
+	
+	<tr>
+		<td>
+			답변작성자<%=qna.getId() %>
+		</td>		
+		
+	</tr>	
+	<tr>
+		<td>
+		<article>
+			<%=qna.getContent() %>
+		</article>
+		</td>
+	</tr>
+	
+	<%
+	}}
+	%>
+
+
+</table>
+</div>
+<br><br>
 
 
 <div id="comment">
@@ -135,27 +221,27 @@ QnaDto bbs = (QnaDto)session.getAttribute("detailDto");
 <tr>
 	<td>
 		<input type="hidden" name="command" value="writeAnswer" >
-		<input type="hidden" name="iD" value="<%=mem.getId()%>">	<!-- 답변 작성 아이디 -->		
+		<input type="hidden" name="iD" value="<%=mem.getId() %>">	<!-- 답변 작성 아이디 -->		
 		<input type="hidden" name="aNswerCount" value="<%=bbs.getAnswercount() %>"> <!-- 현재의 답변 카운트를 넘겨준다 -->
 		<input type="hidden" name="seq" value="<%=bbs.getSeq() %>">
 	</td>
 </tr>
 <tr>
-	<td> 이글에 대한답변 수 : <%=bbs.getAnswercount() %> </td>
+	<td> 이글에 대한 답변수:<%=qnalist.get(qnalist.size()-1).getAnswercount() %> </td>
 	<td rowspan="2"> 
 		<input type="submit" value="등록">
 	</td> 
 </tr>
 <tr>
 	<td>
-		<textarea id="summernote" name="cOntent"></textarea>
+		<textarea id="summernotebefore" name="cOntent"></textarea>
 	</td>
 </tr>	
 </table>
 </form>
 </div>
 
-
+<br><br><br><br><br><br>
 
 
 <!-- 답변 끝 -->
@@ -174,6 +260,21 @@ function deletebbs(seq) {
 
 </script>
 
+<script type="text/javascript">
+// 답변창을 클릭시 서머노트 불러오기
+$(function() {
+	
+	$('#summernotebefore').bind('click', function() {
+		$('#summernotebefore').attr('id','summernote');
+		
+	});
+	
+	
+});
+
+
+</script>
+
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -187,6 +288,7 @@ $(document).ready(function() {
    // $(".note-editable").attr("contenteditable","false")
 });
 </script>
+
 
 
 </body>
