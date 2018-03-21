@@ -1,3 +1,4 @@
+<%@page import="user.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -7,66 +8,63 @@
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/custom.css">
 	<title>login.jsp</title>
-	<link rel="stylesheet" type="text/css" href="_main.css">
+	<link rel="stylesheet" type="text/css" href="_lifemain.css">
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.js"></script>
-	
 </head>
 <body>
+<!-- 로그인 세션 -->
+	<%
+	Object ologin = session.getAttribute("login");
+	UserDto mem = (UserDto)ologin;
+	%>
+<!-- 메뉴 -->
 	<div class="menu">
+		<%
+		if(ologin == null){
+		%>
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
-		<input type="button" class="bbs1">
-		<input type="button" class="techbbs_hjh" id="techbbs">
-		<input type="button" class="bbs3">
-		<input type="button" class="bbs4">
-		<input type="button" class="bbs5" id="jobs">
+		<%
+		}else{
+		%>
+		<div class="actionlogin">
+			<span><%=mem.getId() %></span>
+			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
+			<img class="alarmbtn" alt="" src="image/alarm.PNG" style="cursor: pointer" id="btnPopover">	
+		</div>
+		<%
+		}
+		%>
+		<input type="button" class="bbs1" id="qnabbs">				<!-- 박형태 -->
+		<input type="button" class="techbbs_hjh" id="techbbs">		<!-- 황준현 -->
+		<input type="button" class="bbs3" >							<!-- 정재흥 -->
+		<input type="button" class="bbs4" >							<!-- 장문석 -->
+		<input type="button" class="bbs5" id="jobs">				<!-- 나효진 -->
+		<input type="button" class="bbs6" id="life">				<!-- 정병찬 -->
 	</div>
-	<%
-	String userID = null;
-	if(session.getAttribute("userID") != null){
-		userID = (String)session.getAttribute("userID");
-	}
-	%>
-<%-- 	
-	<nav class="navbar navbar-default">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed"
-				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-				aria-expanded="false">
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="index.jsp">okh 개발자 커뮤니티</a>
-		</div>
-		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav">
-				<li class="active"><a href="index.jsp">메인</a>
-			</ul>
-			<%
-			if(userID == null){
-			%>
-			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="buton" aria-haspopup="true"
-					aria-expanded="false">접속하기<span class="caret"></span>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a href="login.jsp">로그인</a></li>
-						<li><a href="join.jsp">회원가입</a></li>
-					</ul>
-				</li>
-			</ul>
-			<%
-			}
-			%>
-		</div>
-	</nav>
- --%>	
-	<div class="container">
+	<script type="text/javascript">
+	$(function() {
+		$("#login").click(function() {
+			location.href = "User?command=login";
+		});
+		$("#account").click(function() {
+			location.href = "User?command=join";
+		});
+		$("#qnabbs").click(function() {
+			location.href="qnaServlet?command=listQna";
+		});	
+		$("#techbbs").click(function() {
+			location.href="TechbbsController?command=techbbs";
+		});
+		$("#life").click(function() {
+			location.href = "LifeBbs?command=life";
+		});
+	});
+	</script>
+<!-- View -->
+	<div class="wrap">
 		<form action="User" method="post">
 			<table class="table table-bordered table-hover" style="text-align: center; border: 1px solid #dddddd">
 				<thead>
@@ -77,7 +75,7 @@
 						<td style="width: 110px;"><h5>아이디</h5></td>
 						<td>
 							<input type="hidden" name="command" value="loginAf">
-							<input autofocus class="form-control" type="text" name="userID" maxlength="20" placeholder="아이디를 입력하세요.">
+							<input class="form-control" type="text" name="userID" maxlength="20" placeholder="아이디를 입력하세요.">
 						</td>
 					</tr>
 					<tr>
@@ -95,6 +93,7 @@
 			</table>
 		</form>
 	</div>
+<!-- Modal -->
 	<%
 	String messageContent = null;
 	if(session.getAttribute("messageContent") != null){
@@ -160,31 +159,5 @@
 			</div>
 		</div>
 	</div>
-	
-	<!-- 좌측 버튼 부분 -->
-	<script type="text/javascript">
-	$(function() {
-		$("#login").click(function() {
-			location.href="User?command=login";
-		});
-
-		$("#account").click(function() {
-			location.href="User?command=join";
-		});	
-		
-		$("#techbbs").click(function() {
-		      location.href="TechbbsController?command=techbbs";
-		   });
-		
-		
-		$("#jobs").click(function() {
-			location.href="jobs";
-		});
-		
-		$("#life").click(function() {
-			location.href="LifeBbs?command=life";
-		});
-	});
-	</script>
 </body>
 </html>

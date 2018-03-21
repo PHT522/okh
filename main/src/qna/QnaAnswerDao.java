@@ -2,6 +2,7 @@ package qna;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -78,7 +79,7 @@ public class QnaAnswerDao implements QnaAnswerDaoImpl {
 			psmt.setString(6, dto.getContent());
 			psmt.setString(7, seq+"테그");
 			psmt.setInt(8, seq);
-			psmt.setInt(9, dto.getAnswercount() + 1);
+			psmt.setInt(9, dto.getCommentcount() + 1);
 			System.out.println("4/6 writeAnswer Success");	
 			
 			count = psmt.executeUpdate();
@@ -119,6 +120,36 @@ public class QnaAnswerDao implements QnaAnswerDaoImpl {
 		
 		
 		return null;
+	}
+
+	@Override
+	public int getSeq() {
+		
+		String sql = " SELECT MAX(SEQ) FROM QNAANSWER";
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		int seq=0;
+		try {
+			conn=DBConnection.getConnection();
+			System.out.println("1/6 getSeq Success");
+			psmt=conn.prepareStatement(sql);
+			System.out.println("2/6 getSeq Success");
+			rs = psmt.executeQuery();
+			rs.next();
+			System.out.println("3/6 getSeq Success");
+			seq = rs.getInt(1);
+			System.out.println("4/6 getSeq Success"+seq);
+		} catch (SQLException e) {
+			System.out.println("getSeq fail");
+			e.printStackTrace();
+		}finally {
+			DBClose.close(psmt, conn, null);			
+		}
+		
+		
+		return seq;
 	}
 
 	

@@ -1,23 +1,25 @@
 package user;
 
+import java.io.Serializable;
+
 /*
 DROP TABLE OKHMEM
 CASCADE CONSTRAINTS;
 
 CREATE TABLE OKHMEM(
-	ID VARCHAR2(50) PRIMARY KEY, --아이디. 기본키
+	ID VARCHAR2(50) PRIMARY KEY,
 	PWD VARCHAR2(50) NOT NULL,
-	NAME VARCHAR2(50) NOT NULL,	--이름
+	NAME VARCHAR2(50) NOT NULL,
 	AGE NUMBER(3) NOT NULL,
-	GENDER VARCHAR2(50) NOT NULL,	--성별
-	EMAIL VARCHAR2(50) UNIQUE,
+	GENDER VARCHAR2(50) NOT NULL,
+	EMAIL VARCHAR2(50) NOT NULL,
 	AUTH NUMBER(1) NOT NULL,
 	PROFILE VARCHAR2(50),
-	SCORE NUMBER(10) NOT NULL	--향후 점수관련. 게시글 쓰면 접수 획득하는 부분.
-);
+	SCORE NUMBER(10) NOT NULL
+)
 */
 
-public class UserDto {
+public class UserDto implements Serializable {
 	
 	private String id;
 	private String pwd;
@@ -28,6 +30,9 @@ public class UserDto {
 	private int auth;
 	private String profile;
 	private int score;
+	
+	public UserDto() {
+	}
 	
 	public UserDto(String id, String pwd, String name, int age, String gender, String email, int auth, String profile,
 			int score) {

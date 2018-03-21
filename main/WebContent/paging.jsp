@@ -1,5 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <head>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+	
+	</head>
 <%
 String actionPath = request.getParameter("actionPath"); // bbslist.jsp
 
@@ -18,7 +27,7 @@ int totalCount = (sTotalCount==null||sTotalCount.trim().equals(""))?0:Integer.pa
 int countPerPage = (sCountPerPage==null||sCountPerPage.trim().equals(""))?1:Integer.parseInt(sCountPerPage);
 int countPerBlock = (sBlockCount==null||sBlockCount.trim().equals(""))?1:Integer.parseInt(sBlockCount);
 
-// 페이지 수를 취득
+// 페이지 수를 취득ㄹㅇㅇㄴ
 int totalPage = (int)((totalCount - 1) / countPerPage) + 1;
 /*
 							23
@@ -101,37 +110,62 @@ function gotoPage(pageNum) {
 	objForm.submit();	// form의 Action이 실행되도록한다.
 }
 </script>
-
+<%
+String findWord=request.getParameter("findWord");
+String choice=request.getParameter("choice");
+%>
 <form name="frmPaging" method="get" action="<%=actionPath %>">
 	<input type="hidden" name="nowPage">
-
-	<div align="center">
-		
-		<a href="#" onclick="gotoPage('<%=firstPage %>')">[처음페이지]</a>
+<input type="hidden" name="findWord" value="<%=findWord%>">
+	<input type="hidden" name="choice" value="<%=choice%>">
 	
+	<div align="center">
+	<ul class="pagination pagination-sm">
+		<li class="step">
+		<a href="#" onclick="gotoPage('<%=firstPage %>')">첫페이지</a>
+		</li>
 		<%if(prevPage > 0){ %>
-			<a href="#" onclick="gotoPage('<%=prevPage %>')">[이전]</a>
+		<li class="step"><a href="#" onclick="gotoPage('<%=prevPage %>')">&lt;</a></li>
+		
 		<%}else{%>
-			[이전]
+		<li class="step"><a href="javascript:void(0)" >&lt;</a></li>
 		<%}%>
 		
 		<%	// [1] 2 [3]
 		for(int i = startPage; i <= endPage; i++){			
 			if(i == nowPage){
 				%>
-				<%=i %>
+				
+               <li class="active">
+				<a href="#" onclick="gotoPage('<%=i %>')"><span><%=i %></span></a>
+ 			</li>
 				<%
 			}else{
 				%>
-				<a href="#" onclick="gotoPage('<%=i %>')">[<%=i %>]</a>
+                    <li class="step">
+                    <a href="#" onclick="gotoPage('<%=i %>')"><span><%=i %></span></a>
+                    </li>
 				<%
 			}			
 		}		
 		%>
-		<a href="#" onclick="gotoPage('<%=nextPage %>')">[다음]</a>
-		
-		<a href="#" onclick="gotoPage('<%=endPage %>')">[끝페이지]</a>
-										<!-- totalPage -->
+		<%if(nowPage != endPage){
+	         %>
+	         <li class="step">
+	            <a href="#" onclick="gotoPage('<%=nextPage %>')">&gt;</a>
+	            </li>
+	         <%
+	         }else{
+	         %>
+	            <li class="step"><a href="javascript:void(0)" >&gt;</a></li>
+	         <%
+	         }
+	         %>
+	         <%-- <a href="#" onclick="gotoPage('<%=endPage %>')">끝페이지</a> --%>         <!-- 10페이지 -->
+	         <li class="step">
+	             <a href="#" onclick="gotoPage('<%=totalPage %>')">끝페이지</a>      <!-- 14페이지 -->
+	          </li>
+	      </ul>				<!-- totalPage -->
 	</div>
 
 </form>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+  <display-name>okh</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <servlet-name>UserControler</servlet-name>
+    <servlet-class>user.UserControler</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserControler</servlet-name>
+    <url-pattern>/User</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+  <!-- 기술게시판파일업로드 -->
+  <servlet>
+    <servlet-name>PdsController</servlet-name>
+    <servlet-class>techpds.PdsController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PdsController</servlet-name>
+    <url-pattern>/PdsController</url-pattern>
+  </servlet-mapping>
+   
+     <!-- 기술게시판 -->
+  <servlet>
+    <servlet-name>TechbbsController</servlet-name>
+    <servlet-class>techbbs.TechbbsController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TechbbsController</servlet-name>
+    <url-pattern>/TechbbsController</url-pattern>
+  </servlet-mapping>
+  
+  <!-- qnabbs 게시판 -->
+  <servlet>
+  	<servlet-name>qnaServlet</servlet-name>
+  	<servlet-class>qna.QnaServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>qnaServlet</servlet-name>
+  	<url-pattern>/qnaServlet</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+  
+  <!-- BBS4 컨트롤러  -->
+  <!-- 설정 부분. 선언 부분. -->
+  <!-- 20180310 맨 아래 커뮤니티 부분 -->
+  <!-- 기본 화면 부분. 계속 컨트롤러 추가하면서 사용하면 된다. -->
+  <servlet>
+  	<servlet-name>community</servlet-name> <!-- 이름 -->
+  	<servlet-class>bbs4ControllerServlet.communityServlet</servlet-class> <!-- 이쪽으로 가라 이 의미. -->
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>community</servlet-name> <!-- 이름 -->
+  	<url-pattern>/community</url-pattern>
+  </servlet-mapping>
+  
+  <!-- BBSboardController 일반 게시판 컨트롤 -->
+  <servlet>
+  	<servlet-name>BBSboardController</servlet-name>
+  	<servlet-class>bbs4ControllerServlet.BBSboardController</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>BBSboardController</servlet-name>
+  	<url-pattern>/BBSboardController</url-pattern>
+  </servlet-mapping>
+  
+  
+  <!-- BBSHWCodingController 컨트롤 -->
+  <servlet>
+  	<servlet-name>BBSHWCodingController</servlet-name>
+  	<servlet-class>bbs4ControllerServlet.BBSHWCodingController</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>BBSHWCodingController</servlet-name>
+  	<url-pattern>*.BBSHWCodingController</url-pattern>
+  	
+  </servlet-mapping>
+  
+  
+  <!-- BBSmaterialsController 컨트롤 -->
+  <servlet>
+  	<servlet-name>BBSmaterialsController</servlet-name>
+  	<servlet-class>bbs4ControllerServlet.BBSmaterialsController</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>BBSmaterialsController</servlet-name>
+  	<url-pattern>/BBSmaterialsController</url-pattern>
+  </servlet-mapping>
+  
+  
+  <!-- detail 컨트롤 -->
+  <servlet>
+  	<servlet-name>custuserDetailControl</servlet-name>
+  	<servlet-class>control.CustUserDetailControl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>custuserDetailControl</servlet-name>
+  	<url-pattern>/custuserdetailcontrol</url-pattern>
+  </servlet-mapping>
+</web-app>

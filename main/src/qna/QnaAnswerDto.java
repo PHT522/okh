@@ -8,15 +8,13 @@ CASCADE CONSTRAINTS;
 DROP SEQUENCE SEQ_QNAANSWER;
 
 CREATE TABLE QNAANSWER(
-	SEQ NUMBER(8) PRIMARY KEY,
-	COMMENT_NUM NUMBER(8) NOT NULL,
+	SEQ NUMBER(8) PRIMARY KEY,	
 	ID VARCHAR2(50) NOT NULL,
 	
 	CONTENT VARCHAR2(4000) NOT NULL,
 	WDATE DATE NOT NULL,
-	CHILD NUMBER(8) NOT NULL,
-	DEL NUMBER(1) NOT NULL,
-	LIKECOUNT NUMBER(8)
+	PARENT NUMBER(8) NOT NULL,
+	DEL NUMBER(1) NOT NULL	
 );
 
 CREATE SEQUENCE SEQ_QNAANSWER
@@ -25,6 +23,10 @@ START WITH 1 INCREMENT BY 1;
 ALTER TABLE QNAANSWER
 ADD CONSTRAINT FK_QNAANSWER_ID FOREIGN KEY(ID)
 REFERENCES OKHMEM(ID);
+
+ALTER TABLE QNAANSWER
+ADD CONSTRAINT FK_QNAANSWERSEQ_ID FOREIGN KEY(parent)
+REFERENCES QNA(SEQ);
 
 */
 
@@ -35,7 +37,7 @@ public class QnaAnswerDto implements Serializable {
 	private String id;	
 	private String content;
 	private String wdate;
-	private int child;	
+	private int parent;	
 	private int del;
 	private int likecount;
 	
@@ -45,7 +47,7 @@ public class QnaAnswerDto implements Serializable {
 	
 	
 	
-	public QnaAnswerDto(int seq, int comment_num, String id, String content, String wdate, int child, int del,
+	public QnaAnswerDto(int seq, int comment_num, String id, String content, String wdate, int parent, int del,
 			int likecount) {
 		super();
 		this.seq = seq;
@@ -53,7 +55,7 @@ public class QnaAnswerDto implements Serializable {
 		this.id = id;
 		this.content = content;
 		this.wdate = wdate;
-		this.child = child;
+		this.parent = parent;
 		this.del = del;
 		this.likecount = likecount;
 	}
@@ -142,16 +144,16 @@ public class QnaAnswerDto implements Serializable {
 
 
 
-	public int getChild() {
-		return child;
+	public int getparent() {
+		return parent;
 	}
 
 
 
 
 
-	public void setChild(int child) {
-		this.child = child;
+	public void setparent(int parent) {
+		this.parent = parent;
 	}
 
 
@@ -193,7 +195,7 @@ public class QnaAnswerDto implements Serializable {
 	@Override
 	public String toString() {
 		return "QnaAnswerDto [seq=" + seq + ", comment_num=" + comment_num + ", id=" + id + ", content=" + content
-				+ ", wdate=" + wdate + ", child=" + child + ", del=" + del + ", likecount=" + likecount + "]";
+				+ ", wdate=" + wdate + ", parent=" + parent + ", del=" + del + ", likecount=" + likecount + "]";
 	}
 	
 	

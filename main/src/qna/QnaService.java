@@ -53,14 +53,60 @@ public class QnaService implements QnaServiceImpl {
 	public boolean answer(int seq, QnaDto dto) {
 		return qnadao.answer(seq, dto);
 	}
+	@Override
+	public String[] getTagName(String tagname) {		
+		return qnadao.getTagName(tagname);
+	}
 	
 	
-	//////////////////////////////////////////////
-	
+	@Override
+	public List<QnaDto> getqnaBbssortPagingList(PagingBean paging, String whatsort) {
+		return qnadao.getqnaBbssortPagingList(paging, whatsort);
+	}
+
+	@Override
+	public boolean checkcomment(int seq) {		
+		return qnadao.checkcomment(seq);
+	}
 	@Override
 	public boolean writeAnswer(QnaDto dto, int seq) {
 		return qnaanswerdao.writeAnswer(dto, seq);
 	}
+	@Override
+	public int getSeq() {		
+		return qnaanswerdao.getSeq();
+	}
+	@Override
+	public void likecountplus(int seq) {
+		qnadao.likecountplus(seq);
+		
+	}
+	@Override
+	public void dislikecount(int seq) {
+		qnadao.dislikecount(seq);
+		
+	}
+	@Override
+	public void readcountplus(int seq) {
+		qnadao.readcountplus(seq);
+		
+	}
+	@Override
+	public boolean delete(int seq) {
+		return qnadao.delete(seq);
+	}
+	@Override
+	public void commentcountplus(int seq) {
+		qnadao.commentcountplus(seq);
+		
+	}
+	@Override
+	public void commentcountminus(int seq) {
+		qnadao.commentcountminus(seq);
+		
+	}
+	
+	
 	
 	
 	

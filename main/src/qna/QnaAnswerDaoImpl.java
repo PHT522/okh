@@ -8,4 +8,6 @@ public interface QnaAnswerDaoImpl {
 	
 	public List<QnaAnswerDto> getCommentList();
 	
+	public int getSeq();
+	
 }

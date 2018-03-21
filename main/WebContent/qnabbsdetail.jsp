@@ -19,6 +19,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>qnabbsdetail.jsp</title>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<!-- include summernote libraries(jQuery, bootstrap) -->
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
@@ -35,64 +36,46 @@
 	<!-- include summernote-ko-KR -->
 	<script src="lang/summernote-ko-KR.js"></script>
 	
-	<!-- ajax prototype 불러오기 -->
-	<script src="js/prototype.js"></script>	
-	
-	<script type="text/javascript">
-	Event.observe(window, "load", 
-			function(){
-				process()
-			}	
-		);
-	
-	function process() {
-		var divNode = null;
-		Event.observe("summernotebefore", "click", keyPressProcess);
-		function keyPressProcess() {
-			
-		}
-	}
-	
+<link rel="stylesheet" type="text/css" href="_detail.css?ver=1.44">
 
-	
-	</script>
-	
-	
-<style type="text/css">
-#main{
- overflow: auto;
-}
+<link rel="stylesheet" type="text/css" href="_main.css?ver=1.31">
+		
 
-</style>
 </head>
 <body>
-
-
-
-
-
-
+<script type="text/javascript">
+function change() {		//좋아요취소		-> 		싫어요활성화
+	$("#likeimg").attr('src','image/likeoff.PNG');
+}
+function change1() {	//좋아요할래요		->		싫어요비활성화
+	$("#likeimg").attr('src','image/likeon.PNG');
+	$("#changedisli").css({ 'pointer-events': 'none' });
+}
+function change2() {	//싫어요취소		->		좋아요활성화
+	$("#dislikeimg").attr('src','image/dislikeoff.PNG');
+}
+function change3() {	//싫어요할래요		->		좋아요비활성화
+	$("#dislikeimg").attr('src','image/dislikeon.PNG');
+	$("#changeli").css({ 'pointer-events': 'none' });
+}
+var myVar;
+$(function() {
+	$("#repcancel").click(function() {
+		myVar=setTimeout(_refresh,1000);
+	});
+});
+function _refresh() {
+	location.reload;		
+	clearTimeout(myVar);
+}
+</script>
 <%
 // 로그인한 정보
 Object ologin = session.getAttribute("login");
 UserDto mem = (UserDto)ologin;
 %>
 
-<%--
-String sseq = request.getParameter("seq").trim();
-int seq = Integer.parseInt(sseq);
 
-
-QnaServiceImpl service = QnaService.getInstance();
-QnaDto bbs = service.getBbs(seq);
-
-//UserDto mem = (UserDto)session.getAttribute("login");
-
-/* String str = service.RemoveHTMLTag(bbs.getContent());
-
-String content = str.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
-System.out.println("str:"+content); */
---%>
 
 <%
 QnaDto bbs = (QnaDto)session.getAttribute("detailDto");
@@ -113,32 +96,32 @@ QnaDto bbs = (QnaDto)session.getAttribute("detailDto");
 <col width="100"><col width="400"><col width="150">
 <tr>
 	<td colspan="2" >작성자: <%=bbs.getId() %> </td>
-	<td >답변수:<%=bbs.getAnswercount() %>/조회수:<%=bbs.getReadcount() %></td>
+	<td >답변수:<%=bbs.getCommentcount() %>/조회수:<%=bbs.getReadcount() %></td>
 </tr>
 <tr>
-	<td colspan="2">번호:<%=bbs.getRef() %></td>
+	<td colspan="2">번호:<%= %></td>
 	<td rowspan="3">좋아요 구현</td>
 </tr>
 <tr>
 	<td colspan="2">
-		<input type="text" name="tAg" id="tAg" data-role="tagsinput" value="<%=bbs.getTag() %>" ><br><br>
+		<input type="text" name="tAg" id="tAg" data-role="tagsinput" value="<%=bbs.getTagname() %>" ><br><br>
 	</td>	
 </tr>
 <tr>
 	<td colspan="2" >
-		<%-- <textarea rows="10" cols="50" name="cOntent" id="summernote" >
+		<textarea rows="10" cols="50" name="cOntent" id="summernote" >
 			<%=bbs.getContent() %>
-		</textarea>		 --%>
-		<%-- <textarea  rows="30" cols="50" id="summernote" readonly="readonly" style="width: 100%;" >		
+		</textarea>		
+		<textarea  rows="30" cols="50" id="summernote" readonly="readonly" style="width: 100%;" >		
 		<%=bbs.getContent() %> 
-		</textarea> --%>		
+		</textarea>		
 		<br><br><br>
 		<article>
 		<%=bbs.getContent() %>
 		</article> 
 	</td>
 </tr>
-</table>
+</table> 
 
 <% if(bbs.getId().equals(mem.getId())){ %>
 <button type="button" 
@@ -222,19 +205,19 @@ List<QnaDto> qnalist = service.getBbsPagingList(paging);
 	<td>
 		<input type="hidden" name="command" value="writeAnswer" >
 		<input type="hidden" name="iD" value="<%=mem.getId() %>">	<!-- 답변 작성 아이디 -->		
-		<input type="hidden" name="aNswerCount" value="<%=bbs.getAnswercount() %>"> <!-- 현재의 답변 카운트를 넘겨준다 -->
+		<input type="hidden" name="aNswerCount" value="<%=bbs.getCommentcount() %>"> <!-- 현재의 답변 카운트를 넘겨준다 -->
 		<input type="hidden" name="seq" value="<%=bbs.getSeq() %>">
 	</td>
 </tr>
 <tr>
-	<td> 이글에 대한 답변수:<%=qnalist.get(qnalist.size()-1).getAnswercount() %> </td>
+	<td> 이글에 대한 답변수:<%=qnalist.get(qnalist.size()-1).getCommentcount() %> </td>
 	<td rowspan="2"> 
 		<input type="submit" value="등록">
 	</td> 
 </tr>
 <tr>
 	<td>
-		<textarea id="summernotebefore" name="cOntent"></textarea>
+		<textarea id="summernote" name="cOntent"></textarea>
 	</td>
 </tr>	
 </table>
@@ -260,20 +243,6 @@ function deletebbs(seq) {
 
 </script>
 
-<script type="text/javascript">
-// 답변창을 클릭시 서머노트 불러오기
-$(function() {
-	
-	$('#summernotebefore').bind('click', function() {
-		$('#summernotebefore').attr('id','summernote');
-		
-	});
-	
-	
-});
-
-
-</script>
 
 
 <script type="text/javascript">

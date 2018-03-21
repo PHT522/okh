@@ -20,10 +20,14 @@
 	<link rel="stylesheet" href="css/bootstrap-tagsinput.css">
 	<script src="js/bootstrap-tagsinput.js"></script>
 	
-	<!-- <link rel="stylesheet" type="text/css" href="/main/_qnahbbs.css"> -->
-	<link rel="stylesheet" type="text/css" href="_main.css">
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/custom.css">
+	<link rel="stylesheet" type="text/css" href="_write.css?ver=1.46">
+<link rel="stylesheet" type="text/css" href="_main.css?ver=1.31">
+<!-- 폰트  -->
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
 </head>
-<body>
+<body bgcolor="#fcfbfb">
 
 <div class="menu">
 <jsp:include page="menuinclude.jsp">
@@ -32,17 +36,18 @@
 </div>
 
 
-<div class="wrap">
-<div align="center">
 
 
-<h3>여기는 writeQna입니다.</h3>
+
+
 
 <%
 Object ologin = session.getAttribute("login");
 UserDto mem = (UserDto)ologin;
 %>
-</div>
+
+<div class="wrap">
+
 
 
 <div class="border" align="center">
@@ -50,6 +55,7 @@ UserDto mem = (UserDto)ologin;
 <table>
 
 <tr>현제 접속 아이디는:<%=mem.getId() %> </tr>
+<br><br>
 
 <tr>
 	<td>

@@ -1,12 +1,16 @@
 package qna;
 
 import java.io.IOException;
+import java.util.List;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+
 
 
 
@@ -34,7 +38,7 @@ public class QnaServlet extends HttpServlet {
 		
 		req.setCharacterEncoding("utf-8");
 		resp.setContentType("html/text; charset=utf-8");
-		
+		int parent = 0;
 		String command =req.getParameter("command");
 		
 		QnaServiceImpl service = QnaService.getInstance();
@@ -42,36 +46,39 @@ public class QnaServlet extends HttpServlet {
 		if(command.equals("writeQna")) {
 			System.out.println("여기는 writeQna입니다");
 		
+			
+			
+		
 			QnaDto dto = new QnaDto();
 			
 			dto.setId(req.getParameter("iD"));
 			dto.setTitle(req.getParameter("tItle"));
-			dto.setTag(req.getParameter("tAg"));
+			dto.setTagname(req.getParameter("tAg"));
 			dto.setContent(req.getParameter("cOntent"));
 			
 		//	qnaBbsDaoImpl dao = qnaBbsDao.getInstance();
 		//	dao.writeQnaBbs(dto);
 			
+			System.out.println(dto.toString());
+			
 			service.writeQnaBbs(dto);			
 			
-			//RequestDispatcher rd = req.getRequestDispatcher("/qnaServlet?command=listQna");						
-            //rd.forward(req, resp);
+		//	RequestDispatcher rd = req.getRequestDispatcher("/qnaServlet?command=listQna");						
+        //   rd.forward(req, resp);
 			resp.sendRedirect("qnaServlet?command=listQna");
 			
 		}else if(command.equals("listQna")) {
-			System.out.println("여기는 listQna");
-			
-			
+			System.out.println("여기는 listQna");			
 			
 		//	qnaBbsDaoImpl dao = qnaBbsDao.getInstance();
 		//	dao.getQnaList();			
 			
-			service.getQnaList();
+			List<QnaDto> list = service.getQnaList();
+			req.setAttribute("listQna", list);
 			
-			RequestDispatcher rd = req.getRequestDispatcher("qnabbslist.jsp");
-
-            rd.forward(req, resp);
+			dispatch("qnabbslist.jsp", req, resp);			
 			
+						
 		}else if(command.equals("qnaBbsDetail")) {
 			System.out.println("여기는 qnadetail");
 			String Sseq= req.getParameter("seq");
@@ -79,8 +86,8 @@ public class QnaServlet extends HttpServlet {
 			
 			QnaDto dto = service.getBbs(seq);
 						
-			/*req.getSession().setAttribute("detailDto", dto);
-			RequestDispatcher rd = req.getRequestDispatcher("qnabbsdetail.jsp");*/
+		//	req.getSession().setAttribute("detailDto", dto);
+		//	RequestDispatcher rd = req.getRequestDispatcher("qnabbsdetail.jsp");
 			
 			String action = req.getParameter("action").trim();
 			req.getSession().setAttribute("detailDto", dto);
@@ -108,7 +115,7 @@ public class QnaServlet extends HttpServlet {
 			dto.setSeq(seq);
 			dto.setTitle(req.getParameter("tItle").trim());			
 			dto.setContent(req.getParameter("cOntent").trim());
-			dto.setTag(req.getParameter("tAg").trim());		
+			dto.setTagname(req.getParameter("tAg").trim());		
 			boolean isS = service.qnaupdate(dto);			
 			System.out.println("isS is " +isS);
 			
@@ -153,7 +160,7 @@ public class QnaServlet extends HttpServlet {
 			dto.setId(req.getParameter("iD").trim());
 			//dto.setComment_num(comment_num);
 			dto.setContent(req.getParameter("cOntent").trim());
-			dto.setAnswercount(Integer.parseInt(req.getParameter("aNswerCount").trim()));
+			dto.setCommentcount(Integer.parseInt(req.getParameter("aNswerCount").trim()));
 			
 			service.writeAnswer(dto, seq);
 			
@@ -161,6 +168,13 @@ public class QnaServlet extends HttpServlet {
 			RequestDispatcher rd = req.getRequestDispatcher("qnabbslist.jsp");
             rd.forward(req, resp);
 			
+		}else if(command.equals("sorthe")) {
+			List<QnaDto> list=service.getQnaList();
+			String whatsort=req.getParameter("whatthings");
+			System.out.println("sort해들어왔나?");
+			req.setAttribute("whatsort", whatsort);
+			req.setAttribute("sorthe", list);
+			dispatch("qnabbslist.jsp", req, resp);
 		}
 		
 		
